@@ -29,6 +29,17 @@ namespace WebAPI.Controllers
             return Ok();
         }
 
+        [HttpPost]
+        [Route("{id}/download")]
+        public IActionResult DownloadPhoto(int id)
+        {
+            var employee = _employeeRepository.GetById(id);
+
+            var dataBytes = System.IO.File.ReadAllBytes(employee.photo);
+
+            return File(dataBytes, "image/jpeg");
+        }
+
         [HttpGet]
         public IActionResult GetAll()
         {
