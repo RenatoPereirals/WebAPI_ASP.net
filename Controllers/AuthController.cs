@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WebAPI.Application.Sevices;
-using WebAPI.Domain.Model;
+using WebAPI.Domain.Model.EmployeeAggregate;
 
 namespace WebAPI.Controllers
 {

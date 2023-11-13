@@ -1,5 +1,5 @@
 ﻿using WebAPI.Domain.DTOs;
-using WebAPI.Domain.Model;
+using WebAPI.Domain.Model.EmployeeAggregate;
 
 namespace WebAPI.Infrastructure.Repositories
 {

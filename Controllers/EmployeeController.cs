@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.Application.ViewModel;
 using WebAPI.Domain.DTOs;
-using WebAPI.Domain.Model;
+using WebAPI.Domain.Model.EmployeeAggregate;
 
 namespace WebAPI.Controllers
 {
