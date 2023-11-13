@@ -17,7 +17,7 @@ namespace WebAPI.Controllers
             _employeeRepository = employeeRepository ?? throw new ArgumentNullException();
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpPost]
         public IActionResult Add([FromForm] EmployeeViewModel employeeViewModel)
         {
@@ -31,7 +31,7 @@ namespace WebAPI.Controllers
             return Ok();
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpPost]
         [Route("{id}/download")]
         public IActionResult DownloadPhoto(int id)
@@ -48,11 +48,11 @@ namespace WebAPI.Controllers
             return NotFound();
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpGet]
-        public IActionResult GetAll()
+        public IActionResult GetAll(int pageNumber, int pageQuantity)
         {
-            var employee = _employeeRepository.GetAll();
+            var employee = _employeeRepository.GetAll(pageNumber, pageQuantity);
 
             return Ok(employee);
         }
