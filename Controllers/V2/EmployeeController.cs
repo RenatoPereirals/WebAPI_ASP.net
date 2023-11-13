@@ -4,12 +4,13 @@ using WebAPI.Application.ViewModel;
 using WebAPI.Domain.DTOs;
 using WebAPI.Domain.Model.EmployeeAggregate;
 
-namespace WebAPI.Controllers
+namespace WebAPI.Controllers.V2
 {
     [ApiController]
-    [Route("api/v1/employee")]
+    [Route("api/v{version:apiVersion}/employee")]
+    [ApiVersion("2.0")]
     public class EmployeeController : ControllerBase
-    {
+    {   
         private readonly IEmployeeRepository _employeeRepository;
         private readonly ILogger<EmployeeController> _logger;
         private readonly IMapper _mapper;

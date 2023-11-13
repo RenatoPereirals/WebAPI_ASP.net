@@ -6,6 +6,11 @@ using Microsoft.OpenApi.Models;
 using WebAPI.Infrastructure.Repositories;
 using WebAPI.Application.Mapping;
 using WebAPI.Domain.Model.EmployeeAggregate;
+using Microsoft.AspNetCore.Mvc;
+using WebApi.Application.Swagger;
+using Microsoft.Extensions.Options;
+using Swashbuckle.AspNetCore.SwaggerGen;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,14 +18,33 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
-builder.Services.AddAutoMapper(typeof(DomainToDTOMapping));
+
+builder.Services.AddAutoMapper(typeof(DomainToDTOMapping)); // Mapeamento do meu domínio para meu DTO
 
 builder.Services.AddAuthorization();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+
+// Configuraçãoes das minha versões do site V1, V2.
+builder.Services.AddApiVersioning( o =>
+{
+    o.AssumeDefaultVersionWhenUnspecified = true;
+    o.DefaultApiVersion = new ApiVersion(1, 0);
+});
+
+builder.Services.AddVersionedApiExplorer(setup =>
+{
+    setup.GroupNameFormat = "'v'VVV";
+    setup.SubstituteApiVersionInUrl = true;
+});
+
+// Configuração do Swagger para autenticação
 builder.Services.AddSwaggerGen(c =>
 {
+
+    c.OperationFilter<SwaggerDefaultValues>();
+
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Name = "Authorization",
@@ -50,6 +74,7 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 builder.Services.AddTransient<IEmployeeRepository, EmployeeRepository>();
+builder.Services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerGenOptions>();
 
 // Configurações JWT
 var key = Encoding.ASCII.GetBytes(Key.Secret);
@@ -72,13 +97,22 @@ builder.Services.AddAuthentication(x =>
 });
 
 var app = builder.Build();
+var versionDescriptionProvider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment()) 
+if (app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/error-development");
     app.UseSwagger();
-    app.UseSwaggerUI();
+    // Configuração do swagger para minhas versões v1, v2.
+    app.UseSwaggerUI(options =>
+    {
+        foreach (var description in versionDescriptionProvider.ApiVersionDescriptions)
+        {
+            options.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json",
+                $"Web APi - {description.GroupName.ToUpper()}");
+        }
+    });
 }
 else
 {
