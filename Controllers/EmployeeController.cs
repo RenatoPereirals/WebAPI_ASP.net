@@ -11,11 +11,15 @@ namespace WebAPI.Controllers
     public class EmployeeController : ControllerBase
     {
         private readonly IEmployeeRepository _employeeRepository;
+        private readonly ILogger<EmployeeController> _logger;
 
-        public EmployeeController(IEmployeeRepository employeeRepository)
+        public EmployeeController(IEmployeeRepository employeeRepository, ILogger<EmployeeController> logger)
         {
-            _employeeRepository = employeeRepository ?? throw new ArgumentNullException();
+            _employeeRepository = employeeRepository ?? throw new ArgumentNullException(nameof(employeeRepository));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
+
+
 
         //[Authorize]
         [HttpPost]
@@ -52,7 +56,11 @@ namespace WebAPI.Controllers
         [HttpGet]
         public IActionResult GetAll(int pageNumber, int pageQuantity)
         {
+            _logger.Log(LogLevel.Error, "Teve um erro");
+
             var employee = _employeeRepository.GetAll(pageNumber, pageQuantity);
+
+            _logger.LogInformation("Teste");
 
             return Ok(employee);
         }
