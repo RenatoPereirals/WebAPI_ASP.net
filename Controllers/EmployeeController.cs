@@ -1,8 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using WebAPI.Infrastructure;
-using WebAPI.Model;
-using WebAPI.ViewModel;
+﻿using Microsoft.AspNetCore.Mvc;
+using WebAPI.Application.ViewModel;
+using WebAPI.Domain.Model;
 
 namespace WebAPI.Controllers
 {
@@ -57,8 +55,6 @@ namespace WebAPI.Controllers
         public IActionResult GetAll(int pageNumber, int pageQuantity)
         {
             _logger.Log(LogLevel.Error, "Teve um erro");
-
-            throw new Exception("Erro de teste");
 
             var employee = _employeeRepository.GetAll(pageNumber, pageQuantity);
 

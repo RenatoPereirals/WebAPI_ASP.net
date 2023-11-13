@@ -1,11 +1,11 @@
-using WebAPI.Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using WebAPI.Model;
 using System.Text;
 using WebAPI;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Builder;
+using WebAPI.Domain.Model;
+using WebAPI.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 

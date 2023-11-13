@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System.Runtime.CompilerServices;
-using WebAPI.Model;
+using WebAPI.Domain.Model;
 
 namespace WebAPI.Infrastructure
 {

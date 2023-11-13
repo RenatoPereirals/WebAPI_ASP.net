@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WebAPI.Model;
-using WebAPI.Sevices;
+using WebAPI.Application.Sevices;
+using WebAPI.Domain.Model;
 
 namespace WebAPI.Controllers
 {
