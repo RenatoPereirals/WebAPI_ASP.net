@@ -5,6 +5,7 @@ using WebAPI.Model;
 using System.Text;
 using WebAPI;
 using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Builder;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -68,9 +69,15 @@ builder.Services.AddAuthentication(x =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment()) {
+if (app.Environment.IsDevelopment()) 
+{
+    app.UseExceptionHandler("/error-development");
     app.UseSwagger();
     app.UseSwaggerUI();
+}
+else
+{
+    app.UseExceptionHandler("/error");
 }
 
 app.UseHttpsRedirection();

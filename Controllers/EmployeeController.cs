@@ -58,6 +58,8 @@ namespace WebAPI.Controllers
         {
             _logger.Log(LogLevel.Error, "Teve um erro");
 
+            throw new Exception("Erro de teste");
+
             var employee = _employeeRepository.GetAll(pageNumber, pageQuantity);
 
             _logger.LogInformation("Teste");
