@@ -76,6 +76,16 @@ builder.Services.AddSwaggerGen(c =>
 builder.Services.AddTransient<IEmployeeRepository, EmployeeRepository>();
 builder.Services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerGenOptions>();
 
+builder.Services.AddCors(opitions =>
+{
+    opitions.AddPolicy(name: "MyPolicy", policy =>
+    {
+        policy.WithOrigins("http://localhost:8080")
+        .AllowAnyHeader()
+        .AllowAnyMethod();
+    });
+});
+
 // Configurações JWT
 var key = Encoding.ASCII.GetBytes(Key.Secret);
 
@@ -118,6 +128,8 @@ else
 {
     app.UseExceptionHandler("/error");
 }
+
+app.UseCors("MyPolicy");
 
 app.UseHttpsRedirection();
 
