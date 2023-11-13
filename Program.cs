@@ -3,15 +3,20 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using WebAPI;
 using Microsoft.OpenApi.Models;
-using Microsoft.AspNetCore.Builder;
 using WebAPI.Domain.Model;
 using WebAPI.Infrastructure.Repositories;
+using WebAPI.Application.Mapping;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
+
+builder.Services.AddAutoMapper(typeof(DomainToDTOMapping));
+
+builder.Services.AddAuthorization();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
